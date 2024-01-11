@@ -24,7 +24,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
 
-    
+
 
     return Scaffold(extendBodyBehindAppBar: true, appBar: AppBar(
       backgroundColor: Colors.transparent,
@@ -99,7 +99,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
 
                 signInSignUpButton(context, false, () async {
-                  // Validate input fields
                   if (_emailTextController.text.isEmpty ||
                       _nameTextController.text.isEmpty ||
                       _passwordTextController.text.isEmpty ||

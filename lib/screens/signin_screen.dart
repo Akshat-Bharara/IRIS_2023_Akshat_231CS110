@@ -85,6 +85,12 @@ class _SignInScreenState extends State<SignInScreen> {
                     MaterialPageRoute(builder: (context) => AdminHomeScreen()),
                   );
                 } else {
+
+                  final Box<dynamic> userDetails= await Hive.openBox('user details');
+                  await userDetails.put('Name', user['name']);
+                  await userDetails.put('Email', user['email']);
+                  await userDetails.put('Roll number', user['rollno']);
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => HomeScreen()),
