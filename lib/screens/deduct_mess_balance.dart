@@ -53,6 +53,10 @@ class _DeductMessBalanceState extends State<DeductMessBalance> {
 
     for (QueryDocumentSnapshot document in querySnapshot.docs) {
 
+      if(document['mess']=="Not allotted"){
+        continue;
+      }
+
       int difference = date2.difference(date1).inDays;
 
       final userLeaves = FirebaseFirestore.instance.collection('leaves').doc(document.id);

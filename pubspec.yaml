@@ -42,6 +42,8 @@ dependencies:
   get: ^4.6.6
   hive:
   hive_flutter:
+  firebase_messaging:
+  firebase_analytics:
 
 dev_dependencies:
   flutter_test:
