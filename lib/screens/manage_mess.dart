@@ -21,7 +21,6 @@ class _ManageMess extends State<ManageMess> {
   @override
   void initState() {
     super.initState();
-    // Fetch the mess documents when the widget initializes
     fetchMesses();
   }
 
@@ -31,7 +30,6 @@ class _ManageMess extends State<ManageMess> {
           await FirebaseFirestore.instance.collection('mess').get();
       setState(() {
         messList = querySnapshot.docs;
-        // Set default selectedMessId, if any
         selectedMessId = messList.isNotEmpty ? messList.first.id : null;
       });
     } catch (e) {
@@ -111,7 +109,6 @@ class _ManageMess extends State<ManageMess> {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
 
-            // Add a dropdown or some mechanism to select the mess to delete
 
             DropdownButton<String>(
               value: selectedMessId,
@@ -161,7 +158,6 @@ class _ManageMess extends State<ManageMess> {
         'occupied seats':'0'
       });
 
-      // Clear the text fields after creating a mess
       _messNameController.clear();
       _blockNumberController.clear();
       _messCouncillorController.clear();
@@ -171,17 +167,14 @@ class _ManageMess extends State<ManageMess> {
 
       fetchMesses();
 
-      // Show a success message to the user
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Mess created successfully.'),
         ),
       );
     } catch (e) {
-      // Handle any errors that occur during the createMess process
       print('Error creating mess: $e');
 
-      // Show an error message to the user
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Failed to create mess. Please try again.'),
@@ -207,9 +200,6 @@ class _ManageMess extends State<ManageMess> {
     await _firestore.collection('users').doc(user.id).update({'mess': 'Not Allotted'});
 
     }
-            
-  
-
     fetchMesses();
   } 
 }

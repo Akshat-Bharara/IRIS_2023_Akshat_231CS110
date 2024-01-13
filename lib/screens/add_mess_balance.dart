@@ -136,6 +136,6 @@ class _AddMessBalanceState extends State<AddMessBalance> {
   void hideProcessingIndicator() {
     setState(() {
     });
-    Navigator.of(context).pop(); // Dismiss the modal bottom sheet
+    Navigator.of(context).pop(); 
   }
 }

@@ -21,7 +21,7 @@ class _ViewMessCostState extends State<ViewMessCost> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Mess Cost per day'),
+        title: Text('Mess Costs'),
       ),
       body: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
         future: messCostDocument.get(),
@@ -44,7 +44,7 @@ class _ViewMessCostState extends State<ViewMessCost> {
             _buildCostCard("Lunch", data['lunch'],Icon(Icons.lunch_dining)),
             _buildCostCard("Dinner", data['dinner'],Icon(Icons.restaurant)),
             _buildCostCard("Snacks", data['snacks'],Icon(Icons.dinner_dining)),
-            _buildCostCard("Total", data['total'],Icon(Icons.numbers)),
+            _buildCostCard("Total (per day)", data['total'],Icon(Icons.numbers)),
           ];
 
           return ListView(

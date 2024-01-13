@@ -65,14 +65,12 @@ class _MessChangeRequestsState extends State<MessChangeRequests> {
                         IconButton(
                           icon: Icon(Icons.check, color: Colors.green),
                           onPressed: () {
-                            // Implement logic for approval
                             approveMessChange(request.id, request['old mess'].toString(), request['new mess'].toString());
                           },
                         ),
                         IconButton(
                           icon: Icon(Icons.close, color: Colors.red),
                           onPressed: () {
-                            // Implement logic for rejection
                             rejectMessChange(request.id);
                           },
                         ),

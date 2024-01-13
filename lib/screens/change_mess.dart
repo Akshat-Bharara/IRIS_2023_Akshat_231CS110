@@ -220,7 +220,6 @@ class _ChangeMessState extends State<ChangeMess> {
                           + "\nEmail ID : ${mess['Email ID']}"
                           ),
                           onTap: () {
-                            // Implement registration logic here
                             initiateRequest(mess['Name'],mess['vacancy']);
                           },
                         ),

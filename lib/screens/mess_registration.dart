@@ -77,7 +77,6 @@ class _MessRegistrationState extends State<MessRegistration> {
                         + "\nEmail ID : ${mess['Email ID']}"
                         ),
                         onTap: () {
-                          // Implement registration logic here
                           registerForMess(mess['Name'],mess['occupied seats'],mess['vacancy']);
                         },
                       ),
@@ -92,20 +91,17 @@ class _MessRegistrationState extends State<MessRegistration> {
   }
 
   Future<Null> registerForMess(String messId, String seats,String vacancy) async {
-    // Implement your logic to register the user for the selected mess
 
     if(vacancy=="0"){
       showAlertDialog(context, "No vacancy", "All seats in this mess have been occupied");
       return null;
     }
 
-    // Update the 'mess' field for the user
     try {
       await _firestore.collection('users').doc(currentUser!.email).update({
         'mess': messId,
       });
 
-      // Update the vacancy count for the selected mess
 
       int intSeats = int.parse(seats);
       
@@ -114,20 +110,16 @@ class _MessRegistrationState extends State<MessRegistration> {
         'occupied seats': (intSeats+1).toString(),
       });
 
-      // Show a success message to the user
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Mess registration successful.'),
         ),
       );
 
-      // Navigate back to the home screen
       Navigator.pop(context);
     } catch (e) {
-      // Handle any errors that occur during the registration process
       print('Error registering for mess: $e');
 
-      // Show an error message to the user
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Failed to register for mess. Please try again.'),
