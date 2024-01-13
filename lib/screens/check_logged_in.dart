@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:login/screens/admin_home_screen.dart';
 import 'package:login/screens/home_screen.dart';
 import 'package:login/screens/signin_screen.dart';
@@ -72,9 +73,12 @@ class _CheckLoggedInState extends State<CheckLoggedIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: CircularProgressIndicator(),
-      ),
+    body: Center(
+      child: LoadingAnimationWidget.staggeredDotsWave(
+        color: Colors.white,
+        size: 50,
+      )
+    ),
     );
   }
 }

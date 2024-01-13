@@ -8,6 +8,7 @@ import 'package:login/screens/apply_leave.dart';
 import 'package:login/screens/change_mess.dart';
 import 'package:login/screens/mess_registration.dart';
 import 'package:login/screens/signin_screen.dart';
+import 'package:login/screens/view_mess_cost.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -207,6 +208,28 @@ class _HomeScreenState extends State<HomeScreen> {
                         SizedBox(
                           height: 15,
                         ),
+
+                        Center(
+                          child: ElevatedButton(
+                            child: Text("View mess costs"),
+                            onPressed: () {
+                              
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ViewMessCost(),
+                                  ),
+                                );
+                              
+                            },
+                          ),
+                        ),
+
+                        SizedBox(
+                          height: 15,
+                        ),
+
+                        
                         Center(
                           child: ElevatedButton(
                             child: Text("Apply Leave"),

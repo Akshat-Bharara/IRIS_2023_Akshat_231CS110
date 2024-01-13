@@ -32,8 +32,8 @@ class _AddMessBalanceState extends State<AddMessBalance> {
                   labelText: 'Enter amount',
                 ),
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
+                  if (value == null || value.isEmpty || value=="0") {
+                    return 'Please enter some amount';
                   }
                   return null;
                 },
@@ -52,13 +52,10 @@ class _AddMessBalanceState extends State<AddMessBalance> {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
 
-                    // Show the processing indicator
                     showProcessingIndicator();
 
-                    // Call the function to update the mess balance here
                     await addBalance(_amount!);
 
-                    // Hide the processing indicator
                     hideProcessingIndicator();
 
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -142,4 +139,3 @@ class _AddMessBalanceState extends State<AddMessBalance> {
     Navigator.of(context).pop(); // Dismiss the modal bottom sheet
   }
 }
-

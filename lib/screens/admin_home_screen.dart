@@ -6,7 +6,6 @@ import 'package:login/screens/mess_change_requests.dart';
 import 'package:login/screens/mess_costs.dart';
 import 'package:login/screens/signin_screen.dart';
 import 'package:login/screens/signup_screen.dart';
-import 'package:login/utils/color_utils.dart';
 
 class AdminHomeScreen extends StatefulWidget {
   const AdminHomeScreen({Key? key}) : super(key: key);
@@ -20,16 +19,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              hexStringToColor("00458e"),
-              hexStringToColor("000328")
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
+        
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.fromLTRB(
@@ -42,7 +32,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                       style: TextStyle(
                         fontSize: 30.0,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                        color: Colors.white,
                       ),
                     ),
                 

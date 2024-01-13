@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:login/reusable_widgets/reusable_widget.dart';
@@ -17,22 +16,12 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
 
-  final _firebaseMessaging = FirebaseMessaging.instance;
 
 
   TextEditingController _passwordTextController = TextEditingController();
   TextEditingController _emailTextController = TextEditingController();
 
-  Future<void> initNotifications() async {
-    //request permission from user
-    await _firebaseMessaging.requestPermission();
-
-    //fetch FCM tokens
-    final fCMTocken = await _firebaseMessaging.getToken();
-
-    //print token(send to server)
-    print('token: $fCMTocken');
-  }
+  
 
 
   @override
@@ -57,6 +46,20 @@ class _SignInScreenState extends State<SignInScreen> {
             SizedBox(
               height: 30,
             ),
+            Text(
+                      "LOGIN",
+                      style: TextStyle(
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+
+                    SizedBox(
+              height: 30,
+            ),
+
+
             reusableTextField("Enter Email: ", Icons.person_outline, false, _emailTextController),
             SizedBox(
               height: 30,
@@ -121,7 +124,6 @@ class _SignInScreenState extends State<SignInScreen> {
               
             }
 
-          initNotifications();
 
 
 

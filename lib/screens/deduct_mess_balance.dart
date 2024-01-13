@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:login/screens/check_logged_in.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class DeductMessBalance extends StatefulWidget {
   const DeductMessBalance({Key? key}) : super(key: key);
@@ -53,7 +54,7 @@ class _DeductMessBalanceState extends State<DeductMessBalance> {
 
     for (QueryDocumentSnapshot document in querySnapshot.docs) {
 
-      if(document['mess']=="Not allotted"){
+      if(document['mess']=="Not Allotted"){
         continue;
       }
 
@@ -82,6 +83,10 @@ class _DeductMessBalanceState extends State<DeductMessBalance> {
       int oldBalance = int.parse(document['mess balance']);
       int newBalance = oldBalance-deductBalance;
       db.collection("users").doc(document.id).update({"mess balance": newBalance.toString()});
+
+      if(newBalance<-500){
+        db.collection("users").doc(document.id).update({"mess": "Not Allotted"});
+      }
     }
 
     db.collection("last deducted").doc("date").update({"date": newDate});
@@ -92,28 +97,10 @@ class _DeductMessBalanceState extends State<DeductMessBalance> {
   @override
   void initState() {
     super.initState();
-
-    // Simulating an async operation (e.g., deducting mess balance)
-
     balanceDeduction();
-    
-
-    // After the operation is done, you can call stopLoading to stop the indicator
-    Future.delayed(const Duration(seconds: 3), () {
-      stopLoading();
-    });
   }
 
   void stopLoading() {
-    setState(() {
-      isLoading = false;
-    });
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) => SignInScreen(),
-    //   ),
-    // );
 
   Navigator.push(
       context,
@@ -127,11 +114,17 @@ class _DeductMessBalanceState extends State<DeductMessBalance> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: isLoading
-            ? const CircularProgressIndicator()
-            : const Text('Deduction completed!'),
-      ),
+      
+    body: Center(
+      child: isLoading? 
+      LoadingAnimationWidget.flickr(
+        leftDotColor: Color.fromARGB(255, 21, 12, 190),
+        rightDotColor: const Color.fromARGB(255, 202, 33, 20),
+        size: 50,
+      )
+      
+      : const Text('Mess balance deduction checked')
+    ),
     );
   }
 }
