@@ -154,7 +154,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                     if (selectedOption == "student") {
                       final data = {
-                        "date1": "null",
+                        "null": "null",
                       };
                       db.collection("leaves").doc(_emailTextController.text).set(data);
 

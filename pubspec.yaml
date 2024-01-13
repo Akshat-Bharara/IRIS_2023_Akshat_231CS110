@@ -45,6 +45,7 @@ dependencies:
   firebase_messaging:
   firebase_analytics:
   loading_animation_widget: ^1.2.0+4
+  mailer: ^6.0.1
 
 dev_dependencies:
   flutter_test:

@@ -8,14 +8,13 @@ import 'package:login/screens/home_screen.dart';
 import 'package:login/screens/signin_screen.dart';
 
 class CheckLoggedIn extends StatefulWidget {
-  const CheckLoggedIn({super.key});
+  const CheckLoggedIn({Key? key});
 
   @override
   State<CheckLoggedIn> createState() => _CheckLoggedInState();
 }
 
 class _CheckLoggedInState extends State<CheckLoggedIn> {
-
   @override
   void initState() {
     super.initState();
@@ -23,62 +22,68 @@ class _CheckLoggedInState extends State<CheckLoggedIn> {
   }
 
   Future<void> _checkAuthStatus() async {
-    final Box<dynamic> hiveBox = await Hive.openBox('authBox');
-    final bool isLoggedIn = hiveBox.get('isLoggedIn') ?? false;
+    try {
+      final Box<dynamic> hiveBox = await Hive.openBox('authBox');
+      final bool isLoggedIn = hiveBox.get('isLoggedIn') ?? false;
 
-    if (isLoggedIn) {
+      if (isLoggedIn) {
+        final Box<dynamic> credentials = await Hive.openBox('credentials');
+        String emailId = await credentials.get('email');
 
-      final Box<dynamic> Credentials = await Hive.openBox('credentials');
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailId,
+          password: await credentials.get('password'),
+        );
 
-      String emailId = await Credentials.get('email');
+        final DocumentSnapshot userSnapshot =
+            await FirebaseFirestore.instance.collection('users').doc(emailId).get();
+        final String role = userSnapshot['role'];
 
-        
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-                email: emailId,
-                password: await Credentials.get('password'),
-                );
-
-      final DocumentSnapshot userSnapshot = await FirebaseFirestore.instance.collection('users').doc(emailId).get();
-      final String role = userSnapshot['role'];
-
-      if(role=="student"){
+        if (role == "student") {
           Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => HomeScreen(),
+            ),
+          );
+        } else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AdminHomeScreen(),
+            ),
+          );
+        }
+      } else {
+        Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => HomeScreen(),
+            builder: (context) => SignInScreen(),
           ),
         );
       }
-      else{
-          Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => AdminHomeScreen(),
-          ),
-        );
-      }
-        
-
-        
-    } else {
+    } catch (e) {
+      print('Error checking authentication status: $e');
+      // Handle the error as needed, e.g., display an error message.
+      // Navigate to the desired screen or take appropriate actions.
       Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => SignInScreen(),
-      ),
-    );
+        context,
+        MaterialPageRoute(
+          builder: (context) => SignInScreen(),
+        ),
+      );
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    body: Center(
-      child: LoadingAnimationWidget.staggeredDotsWave(
-        color: Colors.white,
-        size: 50,
-      )
-    ),
+      body: Center(
+        child: LoadingAnimationWidget.staggeredDotsWave(
+          color: Colors.white,
+          size: 50,
+        ),
+      ),
     );
   }
 }
