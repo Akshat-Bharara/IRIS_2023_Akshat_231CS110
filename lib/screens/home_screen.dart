@@ -70,14 +70,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         "name": _userHive.get('Name', defaultValue: ''),
                         "email": _userHive.get('Email', defaultValue: ''),
                         "rollno": _userHive.get('Roll number', defaultValue: ''),
+                        "mess": _userHive.get('mess', defaultValue: ''),
+                        "mess balance": _userHive.get('mess balance', defaultValue: ''),
                       }
                     ];
 
-                    for (int i = 0; i < itemsList.length; i++) {
-                      if (itemsList[i]["email"] == currentUser!.email!) {
-                        userDetails.add(itemsList[i]);
-                      }
-                    }
+                    // for (int i = 0; i < itemsList.length; i++) {
+                    //   if (itemsList[i]["email"] == currentUser!.email!) {
+                    //     userDetails.add(itemsList[i]);
+                    //   }
+                    // }
 
                     if (itemsList.isEmpty) {
                       return Center(
@@ -130,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             border: Border.all(),
                           ),
                           child:
-                              Text("Mess Balance: ${userDetails[1]["mess balance"]}"),
+                              Text("Mess Balance: ${userDetails[0]["mess balance"]}"),
                         ),
                         Container(
                           width: 350,
@@ -141,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Colors.black,
                             border: Border.all(),
                           ),
-                          child: Text("Current Mess: ${userDetails[1]["mess"]}"),
+                          child: Text("Current Mess: ${userDetails[0]["mess"]}"),
                         ),
                         SizedBox(
                           height: 15,
@@ -166,7 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: ElevatedButton(
                             child: Text("Mess Registration"),
                             onPressed: () {
-                              if (userDetails[1]["mess"] == "Not Allotted") {
+                              if (userDetails[0]["mess"] == "Not Allotted") {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -189,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: ElevatedButton(
                             child: Text("Change Mess"),
                             onPressed: () {
-                              if (userDetails[1]["mess"] == "Not Allotted") {
+                              if (userDetails[0]["mess"] == "Not Allotted") {
                                 showAlertDialog(
                                     context,
                                     "Mess is unallotted",
@@ -268,7 +270,23 @@ class _HomeScreenState extends State<HomeScreen> {
                         Center(
                           child: ElevatedButton(
                             child: Text("Logout"),
-                            onPressed: () {
+                            onPressed: () async {
+                              var _firestore = FirebaseFirestore.instance;
+                              var current_user = FirebaseAuth.instance.currentUser;
+                              final Box<dynamic> userDetails= await Hive.openBox('user details');
+                              String mess = await userDetails.get('mess');
+                              String mess_balance = await userDetails.get('mess balance');
+
+                              await _firestore.collection('users').doc(current_user!.email).update({
+                                'mess': mess,
+                              });
+
+                              await _firestore.collection('users').doc(current_user!.email).update({
+                                'mess balance': mess_balance,
+                              });
+
+
+
                               FirebaseAuth.instance
                                   .signOut()
                                   .then((value) async {

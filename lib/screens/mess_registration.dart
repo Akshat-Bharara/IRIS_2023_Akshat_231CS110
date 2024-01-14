@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hive/hive.dart';
 import 'package:login/reusable_widgets/reusable_widget.dart';
 
 class MessRegistration extends StatefulWidget {
@@ -98,11 +99,10 @@ class _MessRegistrationState extends State<MessRegistration> {
     }
 
     try {
-      await _firestore.collection('users').doc(currentUser!.email).update({
-        'mess': messId,
-      });
 
-
+      final Box<dynamic> userDetails= await Hive.openBox('user details');
+      await userDetails.put('mess', messId);
+      
       int intSeats = int.parse(seats);
       
 

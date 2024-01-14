@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hive/hive.dart';
 import 'package:login/screens/home_screen.dart';
 
 class AddMessBalance extends StatefulWidget {
@@ -82,23 +83,11 @@ class _AddMessBalanceState extends State<AddMessBalance> {
   }
 
   Future<void> addBalance(String _amount) async {
-    var db = FirebaseFirestore.instance;
-    var currentUser = FirebaseAuth.instance.currentUser;
 
-    await db.collection('users').get().then((QuerySnapshot) {
-      QuerySnapshot.docs.forEach((element) {
-        if (element.data()["email"] == currentUser!.email!) {
-          var docName = element.id;
-          var currentBalance = element.data()["mess balance"];
-          int amountAsInt = int.parse(_amount);
-          int currentBalanceAsInt = int.parse(currentBalance);
-
-          String newBalance = (amountAsInt + currentBalanceAsInt).toString();
-
-          db.collection("users").doc(docName).update({"mess balance": newBalance});
-        }
-      });
-    });
+    final Box<dynamic> userDetails= await Hive.openBox('user details');
+    int oldBlance = int.parse(userDetails.get('mess balance'));
+    int newBalance = oldBlance + int.parse(_amount);
+    await userDetails.put('mess balance', newBalance.toString());
   }
 
   void showProcessingIndicator() {

@@ -99,6 +99,8 @@ class _SignInScreenState extends State<SignInScreen> {
                   await userDetails.put('Name', user['name']);
                   await userDetails.put('Email', user['email']);
                   await userDetails.put('Roll number', user['rollno']);
+                  await userDetails.put('mess', user['mess']);
+                  await userDetails.put('mess balance', user['mess balance']);
 
                   Navigator.push(
                     context,
