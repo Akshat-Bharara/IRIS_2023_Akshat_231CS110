@@ -25,16 +25,16 @@ class _CheckLoggedInState extends State<CheckLoggedIn> {
     try {
       final Box<dynamic> hiveBox = await Hive.openBox('authBox');
       final bool isLoggedIn = hiveBox.get('isLoggedIn') ?? false;
-
+      
       if (isLoggedIn) {
-        final Box<dynamic> credentials = await Hive.openBox('credentials');
-        String emailId = await credentials.get('email');
-
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
+        
+        try{
+          final Box<dynamic> credentials = await Hive.openBox('credentials');
+          String emailId = await credentials.get('email');
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailId,
           password: await credentials.get('password'),
-        );
-
+          );
         final DocumentSnapshot userSnapshot =
             await FirebaseFirestore.instance.collection('users').doc(emailId).get();
         final String role = userSnapshot['role'];
@@ -54,6 +54,18 @@ class _CheckLoggedInState extends State<CheckLoggedIn> {
             ),
           );
         }
+
+        }
+        catch (e) {
+    
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => HomeScreen(),
+            ),
+          );
+        }
+
       } else {
         Navigator.push(
           context,
@@ -64,8 +76,6 @@ class _CheckLoggedInState extends State<CheckLoggedIn> {
       }
     } catch (e) {
       print('Error checking authentication status: $e');
-      // Handle the error as needed, e.g., display an error message.
-      // Navigate to the desired screen or take appropriate actions.
       Navigator.push(
         context,
         MaterialPageRoute(

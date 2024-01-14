@@ -87,6 +87,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 final Box<dynamic> Credentials = await Hive.openBox('credentials');
                 await Credentials.put('email', _emailTextController.text);
                 await Credentials.put('password', _passwordTextController.text);
+                await Credentials.put('role', user["role"]);
 
                 if (user["role"] == "admin") {
                   Navigator.push(

@@ -75,12 +75,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       }
                     ];
 
-                    // for (int i = 0; i < itemsList.length; i++) {
-                    //   if (itemsList[i]["email"] == currentUser!.email!) {
-                    //     userDetails.add(itemsList[i]);
-                    //   }
-                    // }
-
                     if (itemsList.isEmpty) {
                       return Center(
                         child: CircularProgressIndicator(),
@@ -281,7 +275,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 'mess': mess,
                               });
 
-                              await _firestore.collection('users').doc(current_user!.email).update({
+                              await _firestore.collection('users').doc(current_user.email).update({
                                 'mess balance': mess_balance,
                               });
 
