@@ -57,7 +57,7 @@ App Project for IRIS Recruitment - Task : Mess Management application
 
 ## List of Planned Features
 - Utilize Firebase Cloud Messaging (FCM) for notifications when a user’s mess balance is insufficient.
-- UI can be modified to so that this app works seamlessly on iOS devices.
+- Optimizing the UI to ensure a seamless experience on both Android and iOS devices.
 
 ## List of known Bugs
 - The UI may not scale appropriately in some devices.
