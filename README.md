@@ -2,6 +2,9 @@
 
 App Project for IRIS Recruitment - Task : Mess Management application
 
+## To make things easy
+- Demo video : https://youtu.be/aFSQ0eiICdw
+
 ## Technologies Used
 - Flutter
 - Dart
@@ -63,7 +66,7 @@ App Project for IRIS Recruitment - Task : Mess Management application
 - The UI may not scale appropriately in some devices.
 
 ## Operating System Used for Development: 
--Windows 11
+- Windows 11
 
 ## References:
 - Flutter docs: https://docs.flutter.dev/
