@@ -8,7 +8,7 @@ App Project for IRIS Recruitment - Task : Mess Management application
 ## To access app (Added on 15 jan) 
 - Login credentials of admin:
 - email: admin@gmail.com
-- password: Admin@123
+- password: admin@123
 - After that you can create a new account and proceed.
 
 
