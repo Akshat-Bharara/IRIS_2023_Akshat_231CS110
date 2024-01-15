@@ -5,6 +5,13 @@ App Project for IRIS Recruitment - Task : Mess Management application
 ## To make things easy
 - Demo video : https://youtu.be/aFSQ0eiICdw
 
+## To access app (Added on 15 jan) 
+- Login credentials of admin:
+- email: admin@gmail.com
+- password: Admin@123
+- After that you can create a new account and proceed.
+
+
 ## Technologies Used
 - Flutter
 - Dart
